@@ -1,16 +1,12 @@
 import React from "react";
 import MyPost from "./MyPost/MyPost";
 import s from './Profile.module.css';
+import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
 const Profile = () => {
   return (
     <div>
-      <div>
-        <img src="https://bipbap.ru/wp-content/uploads/2017/05/maxresdefault-13.jpg" />
-      </div>
-      <div>
-        ava+description
-      </div>
+      <ProfileInfo />
       <MyPost />
     </div>
   )

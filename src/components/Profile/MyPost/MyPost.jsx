@@ -7,7 +7,10 @@ const MyPost = () => {
     <div>
       My Post
       <div>
-        New post
+        <div>
+          <textarea />
+        </div>
+        <button>Add</button>
       </div>
       <div>
         <Post />
