@@ -31,19 +31,29 @@ let store = {
     subscribe(observer) {
         this._rerenderEntireTree = observer;
     },
-    addPost() {
-        let newPost = {
-            message: this._state.profileInfo.newPostText,
-            id: 3
+    dispatch(action) {
+        if (action.type === "ADD-POST") {
+            let newPost = {
+                message: this._state.profileInfo.newPostText,
+                id: 3
+            }
+            this._state.profileInfo.posts.push(newPost);
+            this._state.profileInfo.newPostText = "";
+            this._rerenderEntireTree(this._state);
         }
-        this._state.profileInfo.posts.push(newPost);
-        this._state.profileInfo.newPostText = "";
-        this._rerenderEntireTree(this._state);
-    },
-    changeText(text) {
-        this._state.profileInfo.newPostText = text;
-        this._rerenderEntireTree(this._state);
+        else if (action.type === "CHANGE-TEXT") {
+            this._state.profileInfo.newPostText = action.text;
+            this._rerenderEntireTree(this._state);
+        }
     }
+}
+
+export let addPostActionCreator = () => {
+    return { type: "ADD-POST" };
+}
+
+export let changeTextActionCreator = (text) => {
+    return { type: "CHANGE-TEXT", text: text };
 }
 export default store;
 

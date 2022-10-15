@@ -2,17 +2,18 @@ import { getAllByAltText } from "@testing-library/react";
 import React from "react";
 import s from './MyPost.module.css';
 import Post from './Post/Post';
+import {addPostActionCreator, changeTextActionCreator} from '../../../redux/state';
 
 const MyPost = (props) => {
   let postsElement = props.posts.map((p) => <Post message={p.message} />);
   let newPostElement = React.createRef();
 
   let addPost = () => {
-    props.addPost();
+    props.dispatch(addPostActionCreator());
   }
 
   let changeText = () => {
-    props.changeText(newPostElement.current.value);
+    props.dispatch(changeTextActionCreator(newPostElement.current.value ));
   }
 
   return (
