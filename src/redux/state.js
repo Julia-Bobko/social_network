@@ -1,3 +1,6 @@
+const ADD_POST = "ADD-POST";
+const CHANGE_TEXT = "CHANGE-TEXT";
+
 let store = {
     _state: {
         dialog: {
@@ -32,7 +35,7 @@ let store = {
         this._rerenderEntireTree = observer;
     },
     dispatch(action) {
-        if (action.type === "ADD-POST") {
+        if (action.type === ADD_POST) {
             let newPost = {
                 message: this._state.profileInfo.newPostText,
                 id: 3
@@ -41,7 +44,7 @@ let store = {
             this._state.profileInfo.newPostText = "";
             this._rerenderEntireTree(this._state);
         }
-        else if (action.type === "CHANGE-TEXT") {
+        else if (action.type === CHANGE_TEXT) {
             this._state.profileInfo.newPostText = action.text;
             this._rerenderEntireTree(this._state);
         }
@@ -49,11 +52,12 @@ let store = {
 }
 
 export let addPostActionCreator = () => {
-    return { type: "ADD-POST" };
+    return { type: ADD_POST };
 }
 
 export let changeTextActionCreator = (text) => {
-    return { type: "CHANGE-TEXT", text: text };
+    return { type: CHANGE_TEXT, text: text };
 }
+
 export default store;
 
