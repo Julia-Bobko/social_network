@@ -1,5 +1,4 @@
-const ADD_POST = "ADD-POST";
-const CHANGE_TEXT = "CHANGE-TEXT";
+import profile_reducer from './profile-reducer';
 
 let store = {
     _state: {
@@ -35,28 +34,9 @@ let store = {
         this._rerenderEntireTree = observer;
     },
     dispatch(action) {
-        if (action.type === ADD_POST) {
-            let newPost = {
-                message: this._state.profileInfo.newPostText,
-                id: 3
-            }
-            this._state.profileInfo.posts.push(newPost);
-            this._state.profileInfo.newPostText = "";
-            this._rerenderEntireTree(this._state);
-        }
-        else if (action.type === CHANGE_TEXT) {
-            this._state.profileInfo.newPostText = action.text;
-            this._rerenderEntireTree(this._state);
-        }
+        profile_reducer(this._state.profileInfo, action);
+        this._rerenderEntireTree(this._state);
     }
-}
-
-export let addPostActionCreator = () => {
-    return { type: ADD_POST };
-}
-
-export let changeTextActionCreator = (text) => {
-    return { type: CHANGE_TEXT, text: text };
 }
 
 export default store;

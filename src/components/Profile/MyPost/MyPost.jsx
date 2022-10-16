@@ -2,7 +2,7 @@ import { getAllByAltText } from "@testing-library/react";
 import React from "react";
 import s from './MyPost.module.css';
 import Post from './Post/Post';
-import {addPostActionCreator, changeTextActionCreator} from '../../../redux/state';
+import {addPostActionCreator, changeTextActionCreator} from '../../../redux/profile-reducer';
 
 const MyPost = (props) => {
   let postsElement = props.posts.map((p) => <Post message={p.message} />);
