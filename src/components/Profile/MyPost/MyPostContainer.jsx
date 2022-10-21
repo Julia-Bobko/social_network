@@ -1,25 +1,41 @@
 import { getAllByAltText } from "@testing-library/react";
 import React from "react";
-import s from './MyPost.module.css';
-import Post from './Post/Post';
 import { addPostActionCreator, changeTextActionCreator } from '../../../redux/profile-reducer';
 import MyPost from "./MyPost";
+import { connect } from "react-redux";
 
-const MyPostContainer = (props) => {
+// const MyPostContainer1 = (props) => {
+//   return (
+//     <StoreContext.Consumer>{
+//       (store) => {
 
-  let state = props.store.getState().profileInfo;
+//         let state = store.getState().profileInfo;
 
-  let newPostElement = React.createRef();
+//         let onAddPost = () => {
+//           store.dispatch(addPostActionCreator());
+//         }
 
-  let onAddPost = () => {
-    props.store.dispatch(addPostActionCreator());
+//         let onchangeText = (text) => {
+//           store.dispatch(changeTextActionCreator(text));
+//         }
+//         return (<MyPost changeText={onchangeText} addPost={onAddPost} state={state} />)
+//       }}
+//     </StoreContext.Consumer>
+//   )
+// }
+
+let mapStateToProps = (state) => {
+  return {
+    state: state.profileInfo
   }
-
-  let onchangeText = (text) => {
-    props.store.dispatch(changeTextActionCreator(text));
-  }
-
-  return <MyPost changeText={onchangeText} addPost={onAddPost} state={state} />
 }
 
+let mapDispatchToProps = (dispatch) => {
+  return {
+    addPost: () => { dispatch(addPostActionCreator()) },
+    changeText: (text) => { dispatch(changeTextActionCreator(text)) }
+  }
+}
+
+let MyPostContainer = connect(mapStateToProps, mapDispatchToProps)(MyPost);
 export default MyPostContainer;

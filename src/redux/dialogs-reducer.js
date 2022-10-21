@@ -17,21 +17,29 @@ let initialState = {
 }
 
 let dialogs_reducer = (state = initialState, action) => {
+    debugger
     switch (action.type) {
         case ADD_MESSAGE:
+            debugger
             {
+                let newState = { ...state };
+                newState.messages = [...state.messages];
                 let newMessage = {
                     message: state.newMessage,
                     id: 4
                 }
-                state.messages.push(newMessage);
-                state.newMessage = "";
-                return state;
+                // state.messages.push(newMessage);
+                // state.newMessage = "";
+                // return state;
+                newState.messages.push(newMessage);
+                newState.newMessage = "";
+                return newState;
             }
         case UPDATE_TEXT:
             {
-                state.newMessage = action.message;
-                return state;
+                let newState = {...state};
+                newState.newMessage = action.message;
+                return newState;
             }
 
         default: return state;

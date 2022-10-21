@@ -17,14 +17,18 @@ let profile_reducer = (state = initialState, action) => {
                     message: state.newPostText,
                     id: 3
                 }
-                state.posts.push(newPost);
-                state.newPostText = "";
-                return state;
+                let newState = {...state};
+                newState.posts = [...state.posts];
+
+                newState.posts.push(newPost);
+                newState.newPostText = "";
+                return newState;
             }
         case CHANGE_TEXT:
             {
-                state.newPostText = action.text;
-                return state;
+                let newState = {...state};
+                newState.newPostText = action.text;
+                return newState;
             }
 
         default: return state;
