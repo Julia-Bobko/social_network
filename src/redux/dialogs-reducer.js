@@ -17,50 +17,24 @@ let initialState = {
 }
 
 let dialogs_reducer = (state = initialState, action) => {
-    debugger
     switch (action.type) {
         case ADD_MESSAGE:
-            debugger
-            {
-                let newState = { ...state };
-                newState.messages = [...state.messages];
-                let newMessage = {
-                    message: state.newMessage,
-                    id: 4
-                }
-                // state.messages.push(newMessage);
-                // state.newMessage = "";
-                // return state;
-                newState.messages.push(newMessage);
-                newState.newMessage = "";
-                return newState;
+            return {
+                ...state,
+                messages: [...state.messages, { message: state.newMessage, id: 4 }],
+                newMessage: ''
             }
         case UPDATE_TEXT:
-            {
-                let newState = {...state};
-                newState.newMessage = action.message;
-                return newState;
+            return {
+                ...state,
+                newMessage: action.message
             }
-
         default: return state;
     }
 }
 
-export let addMessageActionCreator = () => {
-    let action = {
-        type: ADD_MESSAGE
-    }
-    return action;
-}
+export let addMessageActionCreator = () => ({ type: ADD_MESSAGE })
 
-export let updateMessageActionCreator = (message) => {
-    let action = {
-        type: UPDATE_TEXT,
-        message: message
-    }
-    return action;
-}
-
-
+export let updateMessageActionCreator = (message) => ({ type: UPDATE_TEXT, message: message })
 
 export default dialogs_reducer;

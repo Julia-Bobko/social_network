@@ -26,6 +26,7 @@ import Dialogs from "./Dialogs";
 //         </StoreContext.Consumer>
 //     )
 // }
+
 const mapStateToProps = (state) => {
     return {
         dialog: state.dialog

@@ -12,35 +12,23 @@ let initialState = {
 let profile_reducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_POST:
-            {
-                let newPost = {
-                    message: state.newPostText,
-                    id: 3
-                }
-                let newState = {...state};
-                newState.posts = [...state.posts];
-
-                newState.posts.push(newPost);
-                newState.newPostText = "";
-                return newState;
+            return {
+                ...state,
+                posts: [...state.posts, { message: state.newPostText, id: 3 }],
+                newPostText: ''
             }
         case CHANGE_TEXT:
-            {
-                let newState = {...state};
-                newState.newPostText = action.text;
-                return newState;
+            return {
+                ...state,
+                newPostText: action.text
             }
 
         default: return state;
     }
 }
 
-export let addPostActionCreator = () => {
-    return { type: ADD_POST };
-}
+export let addPostActionCreator = () => ({ type: ADD_POST })
 
-export let changeTextActionCreator = (text) => {
-    return { type: CHANGE_TEXT, text: text };
-}
+export let changeTextActionCreator = (text) => ({ type: CHANGE_TEXT, text: text })
 
 export default profile_reducer;
