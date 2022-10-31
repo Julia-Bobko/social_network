@@ -1,28 +1,15 @@
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
 const SET_USERS = "SETUSERS";
+const SET_PAGE = "SETPAGE";
+const SET_COUNT = "SETCOUNT";
+
 let initialState = {
     users: [
-        // {
-        //     id: 1, fullName: 'Rose',
-        //     imgPhoto: 'https://www.ogorod.ru/images/cache/460x389/crop/images%7Ccms-image-000036753.jpg',
-        //      follow: false, description: 'Merry and Fragrant', location: { country: 'Belarus', city: 'Minsk' }
-        // },
-        // {
-        //     id: 2, fullName: 'Carnation',
-        //     imgPhoto: 'https://www.ogorod.ru/images/cache/460x389/crop/images%7Ccms-image-000036753.jpg',
-        //      follow: true, description: 'Merry and Fragrant', location: { country: 'Belarus', city: 'Minsk' }
-        // },
-        // {
-        //     id: 3, fullName: 'Сhamomile',
-        //     imgPhoto: 'https://www.ogorod.ru/images/cache/460x389/crop/images%7Ccms-image-000036753.jpg',
-        //      follow: false, description: 'Merry and Fragrant', location: { country: 'Belarus', city: 'Minsk' }
-        // }, {
-        //     id: 4, fullName: 'Tulip',
-        //     imgPhoto: 'https://www.ogorod.ru/images/cache/460x389/crop/images%7Ccms-image-000036753.jpg',
-        //      follow: false, description: 'Merry and Fragrant', location: { country: 'Belarus', city: 'Minsk' }
-        // }
-    ]
+    ],
+    totalCount: 20,
+    pageSize: 5,
+    currentPage: 1
 }
 
 
@@ -53,7 +40,19 @@ let users_reducer = (state = initialState, action) => {
         case SET_USERS: {
             return {
                 ...state,
-                users: [...state.users, ...action.users]
+                users: [...action.users]
+            }
+        }
+        case SET_PAGE: {
+            return {
+                ...state,
+                currentPage: action.page
+            }
+        }
+        case SET_COUNT: {
+            return {
+                ...state,
+                totalCount: action.count
             }
         }
         default: return state
@@ -65,4 +64,9 @@ export let followAC = (idUser) => { return { type: FOLLOW, id: idUser } }
 export let unFollowAC = (idUser) => { return { type: UNFOLLOW, id: idUser } }
 
 export let setUserAC = (users) => { return { type: SET_USERS, users } }
+
+export let setPageAc = (page) => { return { type: SET_PAGE, page } }
+
+export let setCountAc = (count) => { return { type: SET_COUNT, count } }
+
 export default users_reducer;
