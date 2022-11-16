@@ -1,13 +1,12 @@
 import './App.css';
-import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
-import Profile from './components/Profile/Profile';
-import Dialogs from './components/Dialogs/Dialogs';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
+import News from './components/News/News';
+import Login from './components/Login/Login';
 
 
 const App = (props) => {
@@ -22,6 +21,8 @@ const App = (props) => {
             <Route path='/profile/*' element={<ProfileContainer />} />
             <Route path='/dialogs' element={<DialogsContainer />} />
             <Route path='/users' element={<UsersContainer />} />
+            <Route path='/news' element={<News />} />
+            <Route path='/login' element={<Login />} />
           </Routes>
         </div>
       </div>
