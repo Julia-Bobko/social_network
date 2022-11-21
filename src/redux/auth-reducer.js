@@ -1,4 +1,4 @@
-import { userAPI } from '../api/api';
+import { authAPI } from '../api/api';
 const FOLLOW = "FOLLOW";
 const SET_USER_DATA = "SET_USER_DATA";
 
@@ -11,9 +11,7 @@ let initialState = {
 
 
 let auth_reducer = (state = initialState, action) => {
-
     switch (action.type) {
-
         case SET_USER_DATA: {
             return {
                 ...state,
@@ -21,10 +19,10 @@ let auth_reducer = (state = initialState, action) => {
                 isAuthorized: true
             }
         }
-
         default: return state
     }
 }
+
 
 
 
@@ -32,7 +30,7 @@ export let setUserData = ({ id, login, email }) => { return { type: SET_USER_DAT
 
 export const auth = () => {
     return (dispatch) => {
-        userAPI.auth().then((data) => {
+        authAPI.auth().then((data) => {
             if (data.resultCode === 0) {
                 dispatch(setUserData(data.data));
             }

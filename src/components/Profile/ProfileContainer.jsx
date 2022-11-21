@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import Profile from "./Profile";
 import { setUserProfile, getProfile } from '../../redux/profile-reducer';
 import { useParams } from 'react-router-dom';
+import { withAuthRedirect } from "../../hoc/withAuthRedirect";
+import { compose } from "redux";
 
 export function withRouter(Children) {
   return (props) => {
@@ -32,4 +34,9 @@ let mapDispatchToProps = (state) => ({
   userProfile: state.profileInfo.userProfile
 })
 
-export default connect(mapDispatchToProps, { setUserProfile, getProfile })(withRouter(ProfileContainer));
+
+export default compose(
+  connect(mapDispatchToProps, { setUserProfile, getProfile }),
+  withRouter,
+  withAuthRedirect)
+  (ProfileContainer)
