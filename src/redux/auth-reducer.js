@@ -9,7 +9,6 @@ let initialState = {
     isAuthorized: false
 }
 
-
 let auth_reducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_USER_DATA: {
@@ -22,9 +21,6 @@ let auth_reducer = (state = initialState, action) => {
         default: return state
     }
 }
-
-
-
 
 export let setUserData = ({ id, login, email }) => { return { type: SET_USER_DATA, data: { id, login, email } } }
 
