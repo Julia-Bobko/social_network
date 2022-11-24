@@ -9,7 +9,7 @@ const ProfileInfo = (props) => {
   }
   else
     return (<div key={props.userProfile.userId}>
-      <Status/>
+      <Status status={props.status} UpdateStatus = {props.UpdateStatus}/>
       <div className={s.item}>
         <img src="https://bipbap.ru/wp-content/uploads/2017/05/maxresdefault-13.jpg" />
       </div>

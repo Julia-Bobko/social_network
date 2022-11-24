@@ -2,7 +2,8 @@ import React from "react";
 
 class Status extends React.Component {
     state = {
-        editMode: false
+        editMode: false,
+        status: this.props.status
     }
 
     activateMode = () => {
@@ -15,15 +16,22 @@ class Status extends React.Component {
         this.setState({
             editMode: false
         })
+        this.props.UpdateStatus(this.state.status)
+    }
+
+    onChangeStatus =(e)=>{
+        this.setState({
+            status: e.currentTarget.value
+        })
     }
 
     render() {
         return (!this.state.editMode) ?
             <div>
-                <span onDoubleClick={this.activateMode}>status</span>
+                <span onDoubleClick={this.activateMode}>{this.props.status}</span>
             </div> :
             <div>
-                <input autoFocus={true} onBlur={this.deactivateMode} value="status" />
+                <input className="background:black" autoFocus={true} onChange={this.onChangeStatus} onBlur={this.deactivateMode} value={this.state.status} />
             </div>
     }
 }
