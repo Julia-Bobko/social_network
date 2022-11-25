@@ -19,16 +19,25 @@ class Status extends React.Component {
         this.props.UpdateStatus(this.state.status)
     }
 
-    onChangeStatus =(e)=>{
+    onChangeStatus = (e) => {
         this.setState({
             status: e.currentTarget.value
         })
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        debugger
+        if (prevProps.status !== this.props.status) {
+            this.setState({
+                status: this.props.status
+            })
+        }
+    }
+
     render() {
         return (!this.state.editMode) ?
             <div>
-                <span onDoubleClick={this.activateMode}>{this.props.status}</span>
+                <span onDoubleClick={this.activateMode}>{this.props.status || '-----'}</span>
             </div> :
             <div>
                 <input className="background:black" autoFocus={true} onChange={this.onChangeStatus} onBlur={this.deactivateMode} value={this.state.status} />

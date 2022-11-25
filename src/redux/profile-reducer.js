@@ -12,7 +12,7 @@ let initialState = {
     ],
     newPostText: "Hello",
     userProfile: null,
-    status: "i love"
+    status: ""
 }
 
 let profile_reducer = (state = initialState, action) => {
@@ -63,11 +63,7 @@ export const UpdateStatus = (status)=>{
     profileAPI.updateStatus(status).then((data) => {
         if (data.resultCode === 0) {
             dispatch(setStatus(status));
-            console.log(status);
         }
-        else{
-            console.log(data);
-        } 
       })
     }
 }
