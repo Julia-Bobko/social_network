@@ -20,8 +20,7 @@ let profile_reducer = (state = initialState, action) => {
         case ADD_POST:
             return {
                 ...state,
-                posts: [...state.posts, { message: state.newPostText, id: 3 }],
-                newPostText: ''
+                posts: [...state.posts, { message: action.newPost, id: 3 }]
             }
         case CHANGE_TEXT:
             return {
@@ -40,7 +39,7 @@ let profile_reducer = (state = initialState, action) => {
     }
 }
 
-export let addPostActionCreator = () => ({ type: ADD_POST })
+export let addPostActionCreator = (newPost) => ({ type: ADD_POST, newPost })
 
 export let changeTextActionCreator = (text) => ({ type: CHANGE_TEXT, text: text })
 

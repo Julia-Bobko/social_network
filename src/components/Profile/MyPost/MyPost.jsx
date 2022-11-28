@@ -2,35 +2,35 @@ import { getAllByAltText } from "@testing-library/react";
 import React from "react";
 import s from './MyPost.module.css';
 import Post from './Post/Post';
-import {addPostActionCreator, changeTextActionCreator} from '../../../redux/profile-reducer';
+import { reduxForm, Field } from "redux-form";
 
 const MyPost = (props) => {
   let postsElement = props.state.posts.map((p) => <Post message={p.message} />);
 
-  let newPostElement = React.createRef();
-
-  let addPost = () => {
-    props.addPost();
-  }
-
-  let changeText = () => {
-    props.changeText(newPostElement.current.value);
+  let addPost = (newPost) => {
+    props.addPost(newPost.newPostText);
   }
 
   return (
     <div>
       My Post
-      <div>
-        <div>
-          <textarea onChange={changeText} ref={newPostElement} value={props.state.newPostText} />
-        </div>
-        <button onClick={addPost}>Add</button>
-      </div>
+      <AddPostFormRedux onSubmit={addPost} />
       <div>
         {postsElement}
       </div>
     </div>
   )
 }
+
+let AddPostForm = (props) => {
+  return (
+    <form onSubmit={props.handleSubmit}>
+      <Field type={"textarea"} component={"input"} name={"newPostText"} />
+      <button>Add</button>
+    </form>
+  )
+}
+
+let AddPostFormRedux = reduxForm({ form: 'addPost' })(AddPostForm);
 
 export default MyPost;

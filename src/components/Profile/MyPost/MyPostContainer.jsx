@@ -1,6 +1,6 @@
 import { getAllByAltText } from "@testing-library/react";
 import React from "react";
-import { addPostActionCreator, changeTextActionCreator } from '../../../redux/profile-reducer';
+import { addPostActionCreator } from '../../../redux/profile-reducer';
 import MyPost from "./MyPost";
 import { connect } from "react-redux";
 
@@ -32,8 +32,7 @@ let mapStateToProps = (state) => {
 
 let mapDispatchToProps = (dispatch) => {
   return {
-    addPost: () => { dispatch(addPostActionCreator()) },
-    changeText: (text) => { dispatch(changeTextActionCreator(text)) }
+    addPost: (newPost) => { dispatch(addPostActionCreator(newPost)) }
   }
 }
 
