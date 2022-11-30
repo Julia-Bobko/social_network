@@ -1,8 +1,13 @@
 .header {
   grid-area: h;
   background-color:cornsilk;
+  display: flex;
 }
 
 .header img{
   height: 30px;
+}
+
+.loginRight{
+ align-items:center ;
 }

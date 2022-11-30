@@ -7,10 +7,7 @@ let initialState = {
     id: null,
     login: null,
     email: null,
-    isAuthorized: false,
-    rememberMe: false,
-    password: ""
-
+    isAuthorized: false
 }
 
 let auth_reducer = (state = initialState, action) => {
@@ -18,41 +15,52 @@ let auth_reducer = (state = initialState, action) => {
         case SET_USER_DATA: {
             return {
                 ...state,
-                ...action.data,
-                isAuthorized: true
-            }
-        }
-
-        case AUTHORIZE: {
-            return {
-                ...state,
-                ...action.data,
-                isAuthorized: true
+                ...action.data
             }
         }
         default: return state
     }
 }
 
-export let setUserData = ({ id, login, email }) => { return { type: SET_USER_DATA, data: { id, login, email } } }
-export let setAuthoreze = (data) => { return { type: AUTHORIZE, data } }
+export let setUserData = ({ id, login, email, isAuthorized }) => { return { type: SET_USER_DATA, data: { id, login, email, isAuthorized } } }
+
 export const auth = () => {
     return (dispatch) => {
         authAPI.auth().then((data) => {
             if (data.resultCode === 0) {
-                dispatch(setUserData(data.data));
+                let object = {
+                    id:data.data.id, 
+                    login: data.data.login,
+                    email: data.data.email,
+                    isAuthorized: true
+                }
+                dispatch(setUserData(object));
             }
         })
     }
 }
 
 export const login = (email, password, rememberMe) => {
-    debugger
     return (dispatch) => {
         authAPI.login(email, password, rememberMe).then((data) => {
             if (data.resultCode === 0) {
-                console.log(login);
-                dispatch(setUserData());
+                dispatch(auth());
+            }
+        })
+    }
+}
+
+export const logout = () => {
+    return (dispatch) => {
+        authAPI.logout().then((data) => {
+            if (data.resultCode === 0) {
+                let object = {
+                    id: null, 
+                    login: null,
+                    email: null,
+                    isAuthorized: false
+                }
+                dispatch(setUserData(object));
             }
         })
     }
