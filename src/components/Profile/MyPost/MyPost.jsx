@@ -1,9 +1,11 @@
-import { getAllByAltText } from "@testing-library/react";
 import React from "react";
 import s from './MyPost.module.css';
 import Post from './Post/Post';
 import { reduxForm, Field } from "redux-form";
+import {required, maxLength} from '../../../utils/validators/validators';
+import {TextArea} from '../../common/FormsControl/FormsControls';
 
+const maxLength10 = maxLength(15);
 const MyPost = (props) => {
   let postsElement = props.state.posts.map((p) => <Post message={p.message} />);
 
@@ -25,7 +27,7 @@ const MyPost = (props) => {
 let AddPostForm = (props) => {
   return (
     <form onSubmit={props.handleSubmit}>
-      <Field type={"textarea"} component={"input"} name={"newPostText"} />
+      <Field component={TextArea} type={"textarea"} name={"newPostText"} validate={[required, maxLength10]} />
       <button>Add</button>
     </form>
   )

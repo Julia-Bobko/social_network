@@ -1,7 +1,5 @@
 import { authAPI } from '../api/api';
-const FOLLOW = "FOLLOW";
 const SET_USER_DATA = "SET_USER_DATA";
-const AUTHORIZE = "AUTHORIZE";
 
 let initialState = {
     id: null,

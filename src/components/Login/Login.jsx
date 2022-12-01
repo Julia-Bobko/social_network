@@ -3,18 +3,20 @@ import { connect } from "react-redux";
 import { reduxForm, Field } from 'redux-form';
 import { login } from '../../redux/auth-reducer';
 import { Navigate } from "react-router-dom"
+import { required } from "../../utils/validators/validators";
+import {Input} from '../../components/common/FormsControl/FormsControls';
 
 let LoginForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field placeholder={"Login"} name={"email"} component={"input"} />
+                <Field placeholder={"Login"} name={"email"} component={Input} validate={[required]} />
             </div>
             <div>
-                <Field placeholder={"Password"} name={"password"} type="password" component={"input"} />
+                <Field placeholder={"Password"} name={"password"} type="password" component={Input} validate={[required]} />
             </div>
             <div>
-                <Field type={"checkbox"} name={"rememberMe"} component={"input"} />remember me
+                <Field type={"checkbox"} name={"rememberMe"} component={Input} validate={[required]} />remember me
             </div>
             <div>
                 <button>Login</button>
@@ -30,7 +32,6 @@ let Login = (props) => {
     }
 
     if (props.isAuthorized) {
-        debugger
         return (<Navigate to="/profile" />)
     }
 
