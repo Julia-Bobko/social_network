@@ -1,4 +1,5 @@
 import { authAPI } from '../api/api';
+import {stopSubmit} from "redux-form";
 const SET_USER_DATA = "SET_USER_DATA";
 
 let initialState = {
@@ -27,7 +28,7 @@ export const auth = () => {
         authAPI.auth().then((data) => {
             if (data.resultCode === 0) {
                 let object = {
-                    id:data.data.id, 
+                    id: data.data.id,
                     login: data.data.login,
                     email: data.data.email,
                     isAuthorized: true
@@ -38,31 +39,30 @@ export const auth = () => {
     }
 }
 
-export const login = (email, password, rememberMe) => {
-    return (dispatch) => {
-        authAPI.login(email, password, rememberMe).then((data) => {
-            if (data.resultCode === 0) {
-                dispatch(auth());
-            }
-        })
-    }
+export const login = (email, password, rememberMe) => (dispatch) => {
+    
+    let action = stopSubmit("login",{password : "Email is wrong"});
+    dispatch(action);
+    return;
+    authAPI.login(email, password, rememberMe).then((data) => {
+        if (data.resultCode === 0) {
+            dispatch(auth());
+        }
+    })
 }
 
-export const logout = () => {
-    return (dispatch) => {
-        authAPI.logout().then((data) => {
-            if (data.resultCode === 0) {
-                let object = {
-                    id: null, 
-                    login: null,
-                    email: null,
-                    isAuthorized: false
-                }
-                dispatch(setUserData(object));
+export const logout = () => (dispatch) => {
+    authAPI.logout().then((data) => {
+        if (data.resultCode === 0) {
+            let object = {
+                id: null,
+                login: null,
+                email: null,
+                isAuthorized: false
             }
-        })
-    }
+            dispatch(setUserData(object));
+        }
+    })
 }
-
 
 export default auth_reducer;
