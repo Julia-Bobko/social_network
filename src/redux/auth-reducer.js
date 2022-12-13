@@ -41,9 +41,9 @@ export const auth = () => {
 
 export const login = (email, password, rememberMe) => (dispatch) => {
     
-    let action = stopSubmit("login",{password : "Email is wrong"});
-    dispatch(action);
-    return;
+    // let action = stopSubmit("login",{password : "Email is wrong"});
+    // dispatch(action);
+    // return;
     authAPI.login(email, password, rememberMe).then((data) => {
         if (data.resultCode === 0) {
             dispatch(auth());
