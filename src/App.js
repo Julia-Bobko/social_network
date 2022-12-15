@@ -9,17 +9,21 @@ import News from './components/News/News';
 import Login from './components/Login/Login';
 import React from 'react';
 import { connect } from 'react-redux';
-import { auth } from './redux/auth-reducer';
 import { compose } from "redux";
 import { withRouter } from './hoc/withRouter';
+import { initializeApp } from './redux/app-reducer';
+import Preloader from './components/common/Preloader/Preloader';
 
 class App extends React.Component {
 
   componentDidMount() {
-    this.props.auth();
+    this.props.initializeApp();
   }
 
   render() {
+    if (!this.props.initialized) {
+      return <Preloader/>
+    }
     return (
       <BrowserRouter>
         <div className='app-wrapper'>
@@ -41,7 +45,11 @@ class App extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  initialized: state.app.initialized
+})
+
 export default compose(
   withRouter,
-  connect(null, { auth })
+  connect(mapStateToProps, { initializeApp })
 )(App);
