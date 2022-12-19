@@ -94,11 +94,12 @@ export let setFetching = (isFetching) => { return { type: IS_FETCHING, isFetchin
 
 export let toggleFollowingProgress = (followingInprogress, id) => { return { type: TOGGLE_FOLLOWING_PROGRESS, followingInprogress, id } }
 
-export const getUsersThunkCreator = (currentPage, pageSize) => {
+export const getUsersThunkCreator = (page, pageSize) => {
     return (dispatch) => {
-        dispatch(setCurrentPage(currentPage));
+        dispatch(setCurrentPage(page));
         dispatch(setFetching(true));
-        userAPI.getUsers(currentPage, pageSize).then((data) => {
+        dispatch(setCurrentPage(page));
+        userAPI.getUsers(page, pageSize).then((data) => {
             dispatch(setFetching(false));
             dispatch(setUsers(data.items));
             //dispatch(setTotalCount(response.data.totalCount));
