@@ -2,21 +2,12 @@ import React from "react";
 import s from './Users.module.css';
 import userPhoto from '../../assets/images/user.png';
 import { NavLink } from "react-router-dom";
-import axios from "axios";
-import {userAPI} from '../../api/api';
+import Paginator from "../common/Paginator/Paginator";
 
 let Users = (props) => {
     {
-        let countPage = Math.ceil(props.totalCount / props.pageSize);
-        let page = [];
-
-        for (var i = 1; i <= countPage; i++) {
-            page.push(i);
-        }
-
         return <div>
-
-            {page.map((p) => <span className={props.currentPage === p && s.selectedPage} onClick={() => { props.setPage(p) }}>{p} </span>)}
+            <Paginator totalCount={props.totalCount} pageSize={props.pageSize} currentPage={props.currentPage} setPage={props.setPage} />
             {
                 props.users.map((u) =>
                     <div>

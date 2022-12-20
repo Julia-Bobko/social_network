@@ -6,14 +6,17 @@ import {required, maxLength} from '../../../utils/validators/validators';
 import {TextArea} from '../../common/FormsControl/FormsControls';
 
 const maxLength10 = maxLength(15);
-const MyPost = (props) => {
+const MyPost = React.memo((props) => {
+  console.log('render');
   let postsElement = props.state.posts.map((p) => <Post message={p.message} />);
 
+  let newPostElement = React.createRef();
   let addPost = (newPost) => {
     props.addPost(newPost.newPostText);
   }
 
   return (
+   
     <div>
       My Post
       <AddPostFormRedux onSubmit={addPost} />
@@ -22,7 +25,7 @@ const MyPost = (props) => {
       </div>
     </div>
   )
-}
+});
 
 let AddPostForm = (props) => {
   return (
