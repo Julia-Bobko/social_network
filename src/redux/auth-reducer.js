@@ -25,51 +25,46 @@ let auth_reducer = (state = initialState, action) => {
 
 export let setUserData = ({ id, login, email, isAuthorized }) => { return { type: SET_USER_DATA, data: { id, login, email, isAuthorized } } }
 
-export const auth = () => (dispatch) => {
-    return authAPI.auth().then((data) => {
-        if (data.resultCode === 0) {
-            let object = {
-                id: data.data.id,
-                login: data.data.login,
-                email: data.data.email,
-                isAuthorized: true
-            }
-            dispatch(setUserData(object));
+export const auth = () => async (dispatch) => {
+    let data = await authAPI.auth();
+    if (data.resultCode === 0) {
+        let object = {
+            id: data.data.id,
+            login: data.data.login,
+            email: data.data.email,
+            isAuthorized: true
         }
-    })
+        dispatch(setUserData(object));
+    }
 }
 
 
 export const login = (email, password, rememberMe) => {
-    return (dispatch) => {
-        authAPI.login(email, password, rememberMe).then((data) => {
-            if (data.resultCode === 0) {
-                dispatch(auth());
-            }
-
-            else {
-                let message = (data.messages.length > 0) ? data.messages[0] : "Some error";
-                dispatch(stopSubmit("login", { _error: message }));
-            }
-        })
+    return async (dispatch) => {
+        let data = await authAPI.login(email, password, rememberMe);
+        if (data.resultCode === 0) {
+            dispatch(auth());
+        }
+        else {
+            let message = (data.messages.length > 0) ? data.messages[0] : "Some error";
+            dispatch(stopSubmit("login", { _error: message }));
+        }
     }
 }
 
 export const logout = () => {
-    return (dispatch) => {
-        authAPI.logout().then((data) => {
-            if (data.resultCode === 0) {
-                let object = {
-                    id: null,
-                    login: null,
-                    email: null,
-                    isAuthorized: false
-                }
-                dispatch(setUserData(object));
+    return async (dispatch) => {
+        let data = await authAPI.logout();
+        if (data.resultCode === 0) {
+            let object = {
+                id: null,
+                login: null,
+                email: null,
+                isAuthorized: false
             }
-        })
+            dispatch(setUserData(object));
+        }
     }
 }
-
 
 export default auth_reducer;

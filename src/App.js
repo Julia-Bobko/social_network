@@ -1,6 +1,6 @@
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
@@ -25,7 +25,6 @@ class App extends React.Component {
       return <Preloader/>
     }
     return (
-      <BrowserRouter>
         <div className='app-wrapper'>
           <HeaderContainer />
           <Navbar />
@@ -40,7 +39,6 @@ class App extends React.Component {
             </Routes>
           </div>
         </div>
-      </BrowserRouter>
     );
   }
 }
