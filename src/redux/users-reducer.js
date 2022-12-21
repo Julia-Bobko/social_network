@@ -98,26 +98,26 @@ export const getUsersThunkCreator = (page, pageSize) => {
 
     }
 }
+const followUnFollowFlow = async (dispatch, idUser, apiMethod, success) => {
+    dispatch(toggleFollowingProgress(true, idUser));
+    let data = await apiMethod(idUser);
+    if (data.resultCode === 0) {
+        dispatch(success(idUser));
+    }
+    dispatch(toggleFollowingProgress(false, idUser));
+
+}
+
 
 export const unFollow = (idUser) => {
     return async (dispatch) => {
-        dispatch(toggleFollowingProgress(true, idUser));
-        let data = await userAPI.unFollow(idUser);
-        if (data.resultCode === 0) {
-            dispatch(unFollowSuccess(idUser));
-        }
-        dispatch(toggleFollowingProgress(false, idUser));
+        followUnFollowFlow(dispatch, idUser, userAPI.unFollow.bind(userAPI), unFollowSuccess);
     }
 }
 
 export const follow = (idUser) => {
     return async (dispatch) => {
-        dispatch(toggleFollowingProgress(true, idUser));
-        let data = await userAPI.follow(idUser);
-        if (data.resultCode === 0) {
-            dispatch(followSuccess(idUser));
-            dispatch(toggleFollowingProgress(false, idUser));
-        }
+        followUnFollowFlow(dispatch, idUser, userAPI.follow.bind(userAPI), followSuccess);
     }
 }
 

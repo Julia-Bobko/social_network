@@ -1,4 +1,5 @@
 import s from '../../../components/common/FormsControl/FormsControls.module.css';
+import { Field } from 'redux-form';
 
 // export const TextArea = ({ input, meta, ...props }) => {
 //     const hasError = meta.touched && meta.error;
@@ -22,15 +23,22 @@ import s from '../../../components/common/FormsControl/FormsControls.module.css'
 
 
 const Element = Element => ({ input, meta, ...props }) => {
-    const hasError = meta.touched && meta.error;
-    return (
-      <div className={ s.formControl + " " + (hasError ? s.error : "") }>
-        <Element {...input} {...props} />
-        { hasError && <span> { meta.error } </span> }
-      </div>
-    );
-  };
+  const hasError = meta.touched && meta.error;
+  return (
+    <div className={s.formControl + " " + (hasError ? s.error : "")}>
+      <Element {...input} {...props} />
+      {hasError && <span> {meta.error} </span>}
+    </div>
+  );
+};
 
-  export const TextArea = Element("textarea");
+export const TextArea = Element("textarea");
 
-  export const Input = Element("input");
+export const Input = Element("input");
+
+export const createField = (placeholder, name, component, validate, props = {}, text = "") => {
+  return (<div>
+    <Field placeholder={placeholder} name={name} component={component} validate={validate} {...props} />
+    {text}
+  </div>)
+}
