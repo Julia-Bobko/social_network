@@ -9,9 +9,9 @@ const ProfileInfo = (props) => {
   }
   else
     return (<div key={props.userProfile.userId}>
-      <ProfileStatusWithHook status={props.status} UpdateStatus = {props.UpdateStatus}/>
+      <ProfileStatusWithHook status={props.status} UpdateStatus={props.UpdateStatus} />
       <div className={s.item}>
-        <img src="https://bipbap.ru/wp-content/uploads/2017/05/maxresdefault-13.jpg" />
+        <img src={(props.userProfile.photos.small) ? props.userProfile.photos.small : "https://bipbap.ru/wp-content/uploads/2017/05/maxresdefault-13.jpg"} />
       </div>
       <div>
         {props.userProfile.fullName}
