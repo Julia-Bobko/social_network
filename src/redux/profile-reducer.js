@@ -3,6 +3,7 @@ const ADD_POST = "ADD-POST";
 const CHANGE_TEXT = "CHANGE-TEXT";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
 const SET_STATUS = "SET_STATUS";
+const SET_PHOTOS = "SET_PHOTOS";
 
 let initialState = {
     posts: [
@@ -13,6 +14,7 @@ let initialState = {
     newPostText: "Hello",
     userProfile: null,
     status: ""
+
 }
 
 let profile_reducer = (state = initialState, action) => {
@@ -35,6 +37,13 @@ let profile_reducer = (state = initialState, action) => {
             return {
                 ...state, status: action.status
             }
+        case SET_PHOTOS:
+            return {
+                ...state,
+                userProfile:{...state.userProfile, photos: action.photos}
+           
+            }
+
         default: return state;
     }
 }
@@ -46,6 +55,8 @@ export let changeTextActionCreator = (text) => ({ type: CHANGE_TEXT, text: text 
 export let setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile })
 
 export let setStatus = (status) => ({ type: SET_STATUS, status })
+
+export let savePhotoSuccess = (photos) => ({ type: SET_PHOTOS, photos })
 
 export const getProfile = (userId) => {
     return (dispatch) => {
@@ -62,6 +73,16 @@ export const UpdateStatus = (status) => {
         let data = await profileAPI.updateStatus(status);
         if (data.resultCode === 0) {
             dispatch(setStatus(status));
+        }
+    }
+}
+
+export const savePhoto = (file) => {
+    return async (dispatch) => {
+        let data = await profileAPI.savePhoto(file);
+
+        if (data.resultCode === 0) {
+            dispatch(savePhotoSuccess(data.data.photos));
         }
     }
 }
