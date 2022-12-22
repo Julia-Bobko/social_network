@@ -1,14 +1,16 @@
-import { authAPI } from '../api/api';
+import { authAPI, securityAPI } from '../api/api';
 import { stopSubmit } from 'redux-form';
 const FOLLOW = "FOLLOW";
 const SET_USER_DATA = "SET_USER_DATA";
 const AUTHORIZE = "AUTHORIZE";
+const SET_CAPTCHA = "SET_CAPTCHA";
 
 let initialState = {
     id: null,
     login: null,
     email: null,
-    isAuthorized: false
+    isAuthorized: false,
+    captchaUrl: null
 }
 
 let auth_reducer = (state = initialState, action) => {
@@ -19,11 +21,19 @@ let auth_reducer = (state = initialState, action) => {
                 ...action.data
             }
         }
+        case SET_CAPTCHA: {
+            return {
+                ...state,
+                captchaUrl: action.captchaUrl
+            }
+        }
         default: return state
     }
 }
 
 export let setUserData = ({ id, login, email, isAuthorized }) => { return { type: SET_USER_DATA, data: { id, login, email, isAuthorized } } }
+
+export let setCaptcha = (captchaUrl) => { return { type: SET_CAPTCHA, captchaUrl } }
 
 export const auth = () => async (dispatch) => {
     let data = await authAPI.auth();
@@ -38,14 +48,24 @@ export const auth = () => async (dispatch) => {
     }
 }
 
+export const getCaptcha = () => async (dispatch) => {
+    let data = await securityAPI.getCaptchaUrl();
+    dispatch(setCaptcha(data.url));
 
-export const login = (email, password, rememberMe) => {
+}
+
+
+
+export const login = (email, password, rememberMe, captcha) => {
     return async (dispatch) => {
-        let data = await authAPI.login(email, password, rememberMe);
+        let data = await authAPI.login(email, password, rememberMe, captcha);
         if (data.resultCode === 0) {
             dispatch(auth());
         }
         else {
+            if (data.resultCode === 10) {
+                dispatch(getCaptcha());
+            }
             let message = (data.messages.length > 0) ? data.messages[0] : "Some error";
             dispatch(stopSubmit("login", { _error: message }));
         }
